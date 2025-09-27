@@ -6,5 +6,6 @@ from . import views
 
 urlpatterns = [
     path("",views.index, name = "index"),#viewsのindex関数を呼び出す
+    path("<int:question_id>/", views.detail, name="detail")
 ]
 

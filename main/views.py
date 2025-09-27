@@ -3,16 +3,20 @@ from django.shortcuts import render
 
 #関数ベースビュー
 #ビュー関数
+
+from .models import Question
+
 def index(request):
-    question_list =[
-        "人間は好きですか？",
-        "地球はすきですか？",
-        "宇宙はすきですか？",
-    ]
+    all_question = Question.objects.order_by('-pub_date')
     context = {
-        "question_list":question_list,
-        "is_polled": True,
-        "polled_msg":"投票ありがとうごさいました",
-        "not_polled_msg":"投票してください",
+        "all_question" : all_question,
     }
-    return render(request,"main/index.html",context)
+
+    return render(request, "main/index.html",context)
+
+def detail(request, question_id):
+    question = Question.objects.get(pk=question_id)
+    context ={
+        "question":question
+    }
+    return render(request, "main/detail.html",context)
